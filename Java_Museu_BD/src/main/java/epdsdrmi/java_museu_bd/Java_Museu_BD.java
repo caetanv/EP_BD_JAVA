@@ -5,13 +5,21 @@
 
 package epdsdrmi.java_museu_bd;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dell
  */
 public class Java_Museu_BD {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws SQLException {
+        MUSEU_GUI museu = new MUSEU_GUI();
+        museu.setVisible(true);
+        Conexao c = new Conexao();
     }
+    
 }
