@@ -129,6 +129,8 @@ public class MUSEU_GUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Java BD Museu App");
+        setName("Java BD Museu"); // NOI18N
         setResizable(false);
         setSize(getMaximumSize());
 
@@ -138,17 +140,6 @@ public class MUSEU_GUI extends javax.swing.JFrame {
 
         jButton15.setText("ADD");
 
-        jTable11.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         jScrollPane11.setViewportView(jTable11);
 
         jTextField21.setText("Pais");
@@ -755,6 +746,8 @@ public class MUSEU_GUI extends javax.swing.JFrame {
                 .addComponent(TabbedPanel)
                 .addContainerGap())
         );
+
+        getAccessibleContext().setAccessibleName("Java Bd Museu");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
