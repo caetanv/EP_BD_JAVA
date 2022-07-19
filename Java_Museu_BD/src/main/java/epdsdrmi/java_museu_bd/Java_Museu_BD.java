@@ -19,7 +19,6 @@ public class Java_Museu_BD {
     public static void main(String[] args) throws SQLException {
         MUSEU_GUI museu = new MUSEU_GUI();
         museu.setVisible(true);
-        Conexao c = new Conexao();
     }
     
 }

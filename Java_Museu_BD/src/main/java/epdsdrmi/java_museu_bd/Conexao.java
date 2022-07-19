@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import jdk.internal.util.xml.impl.Input;
 
 /**
  *
@@ -19,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class Conexao {    
     private Connection Conexao;
-    private Statement Comando;
+    private Statement Stmt;
     
     private void Executa() throws SQLException {
 	Connect();
@@ -27,47 +29,42 @@ public class Conexao {
     
     Conexao() throws SQLException{
         Connect();
-        Carregar();
     }
     
     private void Connect() throws SQLException{
         try {
-            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
         } catch(ClassNotFoundException e) {
-            System.err.println("JdbcOdbc Bridge Driver not found!");
+            System.err.println("UcanaccessDriver Driver not found!");
         }
         try{
-            Conexao = DriverManager.getConnection("jdbc:odbc:Driver={Microsoft Access Driver (*.accdb)};DBQ=C:/Users/dell/Desktop/Museu.accdb");
-            Comando = Conexao.createStatement();
+            Conexao = DriverManager.getConnection("jdbc:ucanaccess://C:/Users/dell/Desktop/Museu.accdb");
+            Stmt = Conexao.createStatement();
         }catch(SQLException e){
             System.err.println("Erro ao conectar");
         }
     }
     
-    public void Insert() throws SQLException{
+    public void InsertArt(String Nome, Date nasc, Date mort, String pais, String periodo, String estilo, String desc) throws SQLException{
         PreparedStatement strComandoSQL ;
         strComandoSQL = Conexao.prepareStatement(
                         "INSERT INTO ARTISTA(Nome,DataNasc,DataMorte,PaisdeOrigem,PeriodoArt,EstiloPrincipal,Descricao)" +
                         " VALUES(?,?,?,?,?,?,?)");
-        
-			strComandoSQL.setString(1,"Teste");
-			strComandoSQL.setDate(2, new Date(0));
-			strComandoSQL.setDate(3, new Date(0));
-			strComandoSQL.setString(4,"Teste Pais");
-			strComandoSQL.setString(5,"Teste PeriodoArt");
-			strComandoSQL.setString(6,"Teste EstiloPrincipal");
-			strComandoSQL.setString(7,"Teste Descricao");
-			int intRegistro = strComandoSQL.executeUpdate();
-                        if (intRegistro != 0)
-                        JOptionPane.showMessageDialog(null,"Registro adicionado !",
-                                               "Mensagem",JOptionPane.INFORMATION_MESSAGE);
-        Comando.close();
+			strComandoSQL.setString(1,Nome);
+			strComandoSQL.setDate(2, nasc);
+			strComandoSQL.setDate(3, mort);
+			strComandoSQL.setString(4, pais);
+			strComandoSQL.setString(5,periodo);
+			strComandoSQL.setString(6,estilo);
+			strComandoSQL.setString(7,desc);
+			strComandoSQL.execute();
+        Stmt.close();
         Conexao.close();
     }
                      
-    public void Carregar() throws SQLException{
-        Statement stmt = Conexao.createStatement();
-        ResultSet st = stmt.executeQuery("Select * from ARTISTA");
+    public ResultSet CarregarQuery(String query) throws SQLException{
+        ResultSet st = Stmt.executeQuery(query);
+        return st;
     }
-    
+
 }
